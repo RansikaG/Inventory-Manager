@@ -5,7 +5,7 @@ var db = null;
 
 mongodb.MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology:true}).then(connection => {
     connected = true;
-    db = connection.db('market');
+    db = connection.db('inventory');
     console.log("DB connection successful");
 }).catch(error => {
     console.log("Error in conecting to DB");
@@ -17,11 +17,10 @@ async function queryDealsCollection() {
             "handsetCards": [],
             "webCards": []
         };
-   
-
+    
     const dealsCollectionArray = await db.collection('DEALS').find().toArray();
 
-    dealsCollectionArray.array.forEach(element => {
+    dealsCollectionArray.forEach(element => {
         let handsetElement = {}
         handsetElement['imageName'] = element['imageName'];
         handsetElement['title'] = element['title'];
@@ -36,6 +35,8 @@ async function queryDealsCollection() {
         webElement['cols'] = element['webCols'];
         jsonResponse.webCards.push(webElement);
     });
+    console.log(jsonResponse);
+
     return jsonResponse   
     }
     else{

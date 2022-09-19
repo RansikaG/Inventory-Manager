@@ -25,7 +25,8 @@ router.get('/', function(req, res, next) {
 dbAbstractionLayer.queryDealsCollection().then(response=>{
   res.json(response);
 }).catch(error=>{
-  res.status(500).json({})
+  res.status(500).json({});
+  console.log(error);
 });
 
 });
